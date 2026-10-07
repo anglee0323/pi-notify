@@ -56,7 +56,9 @@ Notifications are skipped when stdout is not a TTY (piped output, scripts, CI, o
 
 ## Optional: Custom sound hook
 
-You can run a custom command whenever a notification is sent by setting `PI_NOTIFY_SOUND_CMD`.
+On macOS the extension plays the built-in Glass sound on every notification with zero configuration. Set `PI_NOTIFY_SOUND=0` to silence it.
+
+You can also run a custom command instead by setting `PI_NOTIFY_SOUND_CMD` (overrides the macOS default; non-macOS platforms need it to hear anything):
 
 This keeps the extension tiny and cross-platform: you choose the command for your OS.
 

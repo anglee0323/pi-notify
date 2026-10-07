@@ -58,8 +58,15 @@ function notifyWindows(title: string, body: string): void {
 }
 
 function runSoundHook(): void {
-    const command = process.env.PI_NOTIFY_SOUND_CMD?.trim();
-    if (!command) return;
+    if (process.env.PI_NOTIFY_SOUND === "0") return;
+
+    // Zero-config default: play the macOS Glass sound on notification.
+    // PI_NOTIFY_SOUND_CMD overrides the default; PI_NOTIFY_SOUND=0 silences all sound.
+    let command = process.env.PI_NOTIFY_SOUND_CMD?.trim();
+    if (!command) {
+        if (process.platform !== "darwin") return;
+        command = "afplay /System/Library/Sounds/Glass.aiff";
+    }
 
     try {
         const { spawn } = require("node:child_process");
